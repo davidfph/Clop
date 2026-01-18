@@ -141,7 +141,7 @@ struct CompactResult: View {
 
                 if proError {
                     HStack {
-                        Button("Get Clop Pro") {
+                        Button("获取 Clop Pro") {
                             settingsViewManager.tab = .about
                             openWindow(id: "settings")
 
@@ -152,7 +152,7 @@ struct CompactResult: View {
                         .font(.round(10, weight: .heavy))
                         .colorMultiply(.mauvish.blended(withFraction: 0.8, of: .white))
                         Spacer()
-                        Button("Never show this again") {
+                        Button("不再显示") {
                             neverShowProError = true
                             hoveredOptimiserID = nil
                             optimiser.remove(after: 200, withAnimation: true)
@@ -301,10 +301,10 @@ struct CompactCloseStopButton: View {
                 optimiser.uiStop()
             },
             label: {
-                HStack(spacing: 2) {
-                    SwiftUI.Image(systemName: optimiser.running ? "stop.fill" : "xmark").font(.heavy(8))
-                    Text(optimiser.running ? "Stop" : "Close").font(.medium(9))
-                }
+                    HStack(spacing: 2) {
+                        SwiftUI.Image(systemName: optimiser.running ? "stop.fill" : "xmark").font(.heavy(8))
+                        Text(optimiser.running ? "停止" : "关闭").font(.medium(9))
+                    }
             }
         )
 
@@ -342,14 +342,14 @@ struct OverlayMessageView: View {
 struct DeselectButton: View {
     var body: some View {
         let img = SwiftUI.Image(systemName: "xmark.rectangle.fill")
-        Button("\(img) Clear selection") { SM.selection = [] }
+        Button("\(img) 清除选择") { SM.selection = [] }
     }
 }
 
 struct StopSelectionButton: View {
     var body: some View {
         let img = SwiftUI.Image(systemName: "chevron.backward.circle.fill")
-        Button("\(img) Back") { SM.selecting = false }
+        Button("\(img) 返回") { SM.selecting = false }
     }
 }
 
@@ -425,14 +425,14 @@ class SelectionManager: ObservableObject {
 struct SelectButton: View {
     var body: some View {
         let img = SwiftUI.Image(systemName: "checkmark.rectangle.stack.fill")
-        Button("\(img) Select all") { SM.selection = OM.visibleOptimisers.filter(!\.running).map(\.id).set }
+        Button("\(img) 全选") { SM.selection = OM.visibleOptimisers.filter(!\.running).map(\.id).set }
     }
 }
 
 struct StartSelectionButton: View {
     var body: some View {
         let img = SwiftUI.Image(systemName: "checkmark.rectangle.fill")
-        Button("\(img) Select") { SM.selecting = true }
+        Button("\(img) 选择") { SM.selecting = true }
     }
 }
 
@@ -546,17 +546,17 @@ struct CompactResultList: View {
             }
 
             if hasRunningOptimisers {
-                Button("Stop all") {
+                Button("全部停止") {
                     for optimiser in OM.optimisers.filter(\.running) {
                         optimiser.stop(remove: false)
                         optimiser.uiStop()
                     }
                 }
             }
-            Button(hasRunningOptimisers ? "Stop and clear" : "Clear all") {
+            Button(hasRunningOptimisers ? "停止并清除" : "清除全部") {
                 OM.clearVisibleOptimisers(stop: true)
             }
-            .help("Stop all running optimisations and dismiss all results (\(keyComboModifiers.str) esc)")
+            .help("停止所有正在运行的优化并关闭所有结果 (\(keyComboModifiers.str) esc)")
 
             if !floatingResultsCorner.isTrailing {
                 Spacer()
@@ -639,7 +639,7 @@ struct CompactResultList: View {
                     }
 
                     if progress != nil {
-                        ProgressView(" Done: \(doneCount)/\(visibleCount)  |  Failed: \(failedCount)/\(visibleCount)", value: (doneCount + failedCount).d, total: visibleCount.d)
+                        ProgressView(" 完成: \(doneCount)/\(visibleCount)  |  失败: \(failedCount)/\(visibleCount)", value: (doneCount + failedCount).d, total: visibleCount.d)
                             .controlSize(.small)
                             .frame(width: THUMB_SIZE.width + (showCompactImages ? 40 : -10))
                             .padding(.top, 4)
@@ -650,12 +650,12 @@ struct CompactResultList: View {
                     if !sm.selection.isEmpty {
                         VStack(spacing: 4) {
                             HStack {
-                                Button("Save to folder") {
+                                Button("保存到文件夹") {
                                     sm.save()
                                     sm.selection = []
                                 }
                                 BatchCropButton()
-                                Menu("Downscale") {
+                                Menu("缩小") {
                                     BatchDownscaleMenu(optimisers: sm.selection.compactMap { opt($0) })
                                 }
                             }
@@ -824,7 +824,7 @@ struct ToggleCompactResultListButton: View {
                 )
                 .buttonStyle(FlatButton(color: .clear, textColor: .primary, radius: 7, verticalPadding: 2))
 
-                Text(showList ? "Hide" : "Show")
+                Text(showList ? "隐藏" : "显示")
                     .font(.medium(10))
                     .roundbg(radius: 5, padding: 2, color: .inverted.opacity(0.9), noFG: true)
                     .foregroundColor(.primary)

@@ -25,7 +25,7 @@ struct DropZoneDemoAnimationView: View {
                 )
                 .scaledToFill()
                 .frame(width: 70, height: 50)
-            Text("screenshot.png")
+            Text("截图.png")
                 .font(.round(12))
                 .foregroundColor(clicked ? .white : .primary)
                 .background(
@@ -54,7 +54,7 @@ struct DropZoneDemoAnimationView: View {
                 }
                 DropZoneView(blurredBackground: false).padding(.horizontal, -20)
             }
-            Text("Drag files into the **drop zone** at\nthe **bottom right** corner of your screen")
+            Text("将文件拖放到屏幕\n**右下角** 的 **拖放区**")
                 .multilineTextAlignment(.center)
         }
         .onAppear {
@@ -143,11 +143,11 @@ struct OnboardingView: View {
                     VStack(alignment: .trailing) {
                         menubar
                         Text("""
-                        Clop lives in your **menubar** and waits for you
-                        to copy an image or **screenshot to clipboard**.
+                        Clop 位于您的 **菜单栏** 中，等待您
+                        复制图片或 **截图到剪贴板**。
                         """)
                         .font(.round(14, weight: .regular))
-                        Toggle(" Enable clipboard optimiser", isOn: $enableClipboardOptimiser)
+                        Toggle(" 启用剪贴板优化器", isOn: $enableClipboardOptimiser)
                             .font(.round(11, weight: .regular))
                             .controlSize(.mini)
                     }
@@ -164,13 +164,13 @@ struct OnboardingView: View {
                                 OnboardingFloatingPreview()
                                     .offset(x: -40, y: 0)
                                 Text("""
-                                Optimised images will appear
-                                as **floating thumbnails** in
-                                the **corner of your screen**,
-                                so you can further act on them.
+                                优化后的图片将作为
+                                **浮动缩略图** 出现在
+                                您的 **屏幕角落**，
+                                以便您进一步操作。
                                 """)
                             }
-                            Button("Replay") {
+                            Button("重播") {
                                 fileDropped = false
                             }
                         }
@@ -183,30 +183,30 @@ struct OnboardingView: View {
                 .padding(.bottom, 20)
 
                 Text("""
-                Clop can also watch folders for new **images** and **videos**
-                and **automatically** optimise them.
+                Clop 还可以监视文件夹中的新 **图片** 和 **视频**
+                并 **自动** 优化它们。
                 """)
                 .font(.round(14, weight: .regular))
                 .padding()
                 .multilineTextAlignment(.center)
                 HStack {
                     VStack {
-                        Text("Images").round(12)
+                        Text("图片").round(12)
                         DirListView(fileType: .image, dirs: $imageDirs, enabled: $enableAutomaticImageOptimisations, hideIgnoreRules: true)
                     }
                     VStack {
-                        Text("Videos").round(12)
+                        Text("视频").round(12)
                         DirListView(fileType: .video, dirs: $videoDirs, enabled: $enableAutomaticVideoOptimisations, hideIgnoreRules: true)
                     }
                 }
                 .padding(.bottom, 20)
 
                 if bm.decompressingBinaries {
-                    ProgressView("Preparing optimisers...")
+                    ProgressView("正在准备优化器...")
                         .progressViewStyle(.linear)
                         .padding()
                 } else {
-                    Button("Start using Clop") {
+                    Button("开始使用 Clop") {
                         (AppDelegate.instance as? AppDelegate)?.onboardingWindowController?.close()
                     }
                     .font(.round(14, weight: .semibold))

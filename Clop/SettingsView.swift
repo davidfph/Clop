@@ -242,7 +242,7 @@ struct PDFSettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: SectionHeader(title: "Watch paths", subtitle: "Optimise PDFs as they appear in these folders")) {
+            Section(header: SectionHeader(title: "监视路径", subtitle: "在这些文件夹中出现 PDF 时自动优化")) {
                 DirListView(fileType: .pdf, dirs: $pdfDirs, enabled: $enableAutomaticPDFOptimisations)
             }
             Section(header: SectionHeader(title: "Optimisation rules")) {
@@ -252,26 +252,26 @@ struct PDFSettingsView: View {
                     specificFolderNameTemplate: $specificFolderNameTemplatePDF
                 )
                 HStack {
-                    Text("Skip when PDFs larger than").regular(13).padding(.trailing, 10)
+                    Text("当 PDF 大于").regular(13).padding(.trailing, 10)
                     TextField("", value: $maxPDFSizeMB, formatter: BoundFormatter(min: 1, max: 10000))
                         .multilineTextAlignment(.center)
                         .frame(width: 70)
                         .background(RoundedRectangle(cornerRadius: 6, style: .continuous).stroke(Color.gray, lineWidth: 1).scaleEffect(y: TEXT_FIELD_SCALE).offset(x: TEXT_FIELD_OFFSET))
                     Text("MB").mono(13)
-                    Text("are copied or moved in watched folders").regular(13)
+                    Text("时跳过（当在监视文件夹中复制或移动时）").regular(13)
                 }
                 HStack {
-                    Text("Skip when more than").regular(13)
+                    Text("当超过").regular(13)
                     TextField("", value: $maxPDFFileCount, formatter: BoundFormatter(min: 1, max: 100))
                         .multilineTextAlignment(.center)
                         .frame(width: 50)
                         .background(RoundedRectangle(cornerRadius: 6, style: .continuous).stroke(Color.gray, lineWidth: 1).scaleEffect(y: TEXT_FIELD_SCALE).offset(x: TEXT_FIELD_OFFSET))
-                    Text(maxPDFFileCount == 1 ? "PDF is copied or moved in watched folders" : "PDFs are copied or moved in watched folders").regular(13)
+                    Text(maxPDFFileCount == 1 ? "个 PDF 时跳过（当在监视文件夹中复制或移动时）" : "个 PDF 时跳过（当在监视文件夹中复制或移动时）").regular(13)
                 }
 
                 Toggle(isOn: $useAggressiveOptimisationPDF) {
-                    Text("Use more aggressive optimisation").regular(13)
-                        + Text("\nGenerates smaller files with slightly worse visual quality").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("使用更激进的优化").regular(13)
+                        + Text("\n生成更小的文件，但视觉质量稍差").round(11, weight: .regular).foregroundColor(.secondary)
                 }
             }
         }
@@ -305,7 +305,7 @@ struct VideoSettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: SectionHeader(title: "Watch paths", subtitle: "Optimise videos as they appear in these folders")) {
+            Section(header: SectionHeader(title: "监视路径", subtitle: "在这些文件夹中出现视频时自动优化")) {
                 DirListView(fileType: .video, dirs: $videoDirs, enabled: $enableAutomaticVideoOptimisations)
             }
             Section(header: SectionHeader(title: "Optimisation rules")) {
@@ -744,7 +744,7 @@ struct ImagesSettingsView: View {
 
     var body: some View {
         Form {
-            Section(header: SectionHeader(title: "Watch paths", subtitle: "Optimise images as they appear in these folders")) {
+            Section(header: SectionHeader(title: "监视路径", subtitle: "在这些文件夹中出现图片时自动优化")) {
                 DirListView(fileType: .image, dirs: $imageDirs, enabled: $enableAutomaticImageOptimisations)
             }
             Section(header: SectionHeader(title: "File name handling")) {
@@ -1089,10 +1089,10 @@ struct AboutSettingsView: View {
                 LicenseView(pro: pro)
                     .frame(width: 340)
             }
-            Toggle("Send error reports to developer", isOn: $enableSentry)
+            Toggle("向开发者发送错误报告", isOn: $enableSentry)
                 .frame(width: 340)
             HStack {
-                Link("Source code", destination: "https://github.com/FuzzyIdeas/Clop".url!)
+                Link("源代码", destination: "https://github.com/FuzzyIdeas/Clop".url!)
             }
             .underline()
             .opacity(0.7)
@@ -1459,65 +1459,65 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         Form {
-            Toggle("Show menubar icon", isOn: $showMenubarIcon)
+            Toggle("显示菜单栏图标", isOn: $showMenubarIcon)
             LaunchAtLogin.Toggle()
-            Toggle("Sync settings with other Macs via iCloud", isOn: $syncSettingsCloud)
+            Toggle("通过 iCloud 与其他 Mac 同步设置", isOn: $syncSettingsCloud)
 
-            Section(header: SectionHeader(title: "Clipboard")) {
+            Section(header: SectionHeader(title: "剪贴板", subtitle: "")) {
                 Toggle(isOn: $enableClipboardOptimiser) {
-                    Text("Enable clipboard optimiser").regular(13)
-                        + Text("\nWatch for copied images and optimise them automatically").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("启用剪贴板优化器").regular(13)
+                        + Text("\n监视复制的图片并自动优化它们").round(11, weight: .regular).foregroundColor(.secondary)
                 }
                 Toggle(isOn: $optimiseTIFF) {
-                    Text("Optimise copied TIFF data").regular(13)
-                        + Text("\nUsually coming from graphical design apps, it's sometimes better to not optimise it").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("优化复制的 TIFF 数据").regular(13)
+                        + Text("\n通常来自图形设计应用，有时最好不要优化它").round(11, weight: .regular).foregroundColor(.secondary)
                 }.disabled(!enableClipboardOptimiser)
                 Toggle(isOn: $optimiseVideoClipboard) {
-                    Text("Optimise copied video files").regular(13)
-                        + Text("\nSystem pasteboard can't hold video data, only video file paths.\nThis option automatically optimises copied paths").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("优化复制的视频文件").regular(13)
+                        + Text("\n系统剪贴板无法保存视频数据，只能保存视频文件路径。\n此选项自动优化复制的路径").round(11, weight: .regular).foregroundColor(.secondary)
                 }.disabled(!enableClipboardOptimiser)
                 Toggle(isOn: $optimiseImagePathClipboard) {
-                    Text("Optimise copied image files").regular(13)
-                        + Text("\nCopying images from Finder results in file paths instead of image data.\nThis option automatically optimises copied paths").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("优化复制的图片文件").regular(13)
+                        + Text("\n从 Finder 复制图片会产生文件路径而不是图片数据。\n此选项自动优化复制的路径").round(11, weight: .regular).foregroundColor(.secondary)
                 }.disabled(!enableClipboardOptimiser)
             }
 
-            Section(header: SectionHeader(title: "Working directory", subtitle: "Where temporary files and backups are stored and where the optimised files are saved")) {
+            Section(header: SectionHeader(title: "工作目录", subtitle: "存储临时文件和备份的位置，以及保存优化文件的位置")) {
                 HStack {
-                    Text("Path").regular(13).padding(.trailing, 10)
+                    Text("路径").regular(13).padding(.trailing, 10)
                     TextField("", text: workdirBinding)
                         .multilineTextAlignment(.center)
                         .font(.mono(12))
                         .background(RoundedRectangle(cornerRadius: 6, style: .continuous).stroke(Color.gray, lineWidth: 1).scaleEffect(y: TEXT_FIELD_SCALE).offset(x: TEXT_FIELD_OFFSET))
                 }
 
-                Picker("Periodically cleanup files older than", selection: $workdirCleanupInterval) {
-                    Text("10 minutes").tag(CleanupInterval.every10Minutes)
-                    Text("1 hour").tag(CleanupInterval.hourly)
-                    Text("12 hours").tag(CleanupInterval.every12Hours)
-                    Text("1 day").tag(CleanupInterval.daily)
-                    Text("3 days").tag(CleanupInterval.every3Days)
-                    Text("1 week").tag(CleanupInterval.weekly)
-                    Text("1 month").tag(CleanupInterval.monthly)
-                    Text("never clean up").tag(CleanupInterval.never)
+                Picker("定期清理早于以下时间的文件", selection: $workdirCleanupInterval) {
+                    Text("10 分钟").tag(CleanupInterval.every10Minutes)
+                    Text("1 小时").tag(CleanupInterval.hourly)
+                    Text("12 小时").tag(CleanupInterval.every12Hours)
+                    Text("1 天").tag(CleanupInterval.daily)
+                    Text("3 天").tag(CleanupInterval.every3Days)
+                    Text("1 周").tag(CleanupInterval.weekly)
+                    Text("1 个月").tag(CleanupInterval.monthly)
+                    Text("从不清理").tag(CleanupInterval.never)
                 }
             }
 
-            Section(header: SectionHeader(title: "Optimisation")) {
+            Section(header: SectionHeader(title: "优化", subtitle: "")) {
                 Toggle(isOn: $stripMetadata) {
-                    Text("Strip EXIF Metadata").regular(13)
-                        + Text("\nDeleted identifiable metadata from files (e.g. camera that took the photo, location, date and time etc.)").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("删除 EXIF 元数据").regular(13)
+                        + Text("\n删除文件中的可识别元数据（例如拍摄照片的相机、位置、日期和时间等）").round(11, weight: .regular).foregroundColor(.secondary)
                 }
                 Toggle(isOn: $preserveColorMetadata) {
-                    Text("Preserve color profile metadata").regular(13)
-                        + Text("\nKeep color profile metadata tags untouched when stripping EXIF metadata").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("保留色彩配置文件元数据").regular(13)
+                        + Text("\n删除 EXIF 元数据时保留色彩配置文件元数据标签不变").round(11, weight: .regular).foregroundColor(.secondary)
                 }
                 .padding(.leading, 20)
                 .disabled(!stripMetadata)
 
                 Toggle(isOn: $preserveDates) {
-                    Text("Preserve file creation and modification dates").regular(13)
-                        + Text("\nThe optimised file will have the same creation and modification dates as the original file").round(11, weight: .regular).foregroundColor(.secondary)
+                    Text("保留文件创建和修改日期").regular(13)
+                        + Text("\n优化后的文件将具有与原始文件相同的创建和修改日期").round(11, weight: .regular).foregroundColor(.secondary)
                 }
             }
         }
@@ -1560,19 +1560,19 @@ struct SettingsView: View {
         let t = TabView(selection: $svm.tab) {
             GeneralSettingsView()
                 .tabItem {
-                    Label("General", systemImage: "gear")
+                    Label("通用", systemImage: "gear")
                 }
                 .tag(Tabs.general)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             VideoSettingsView()
                 .tabItem {
-                    Label("Video", systemImage: "video")
+                    Label("视频", systemImage: "video")
                 }
                 .tag(Tabs.video)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             ImagesSettingsView()
                 .tabItem {
-                    Label("Images", systemImage: "photo")
+                    Label("图片", systemImage: "photo")
                 }
                 .tag(Tabs.images)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -1584,31 +1584,31 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             DropZoneSettingsView()
                 .tabItem {
-                    Label("Drop zone", systemImage: "square.stack")
+                    Label("拖放区", systemImage: "square.stack")
                 }
                 .tag(Tabs.dropzone)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             FloatingSettingsView()
                 .tabItem {
-                    Label("Floating results", systemImage: "square.stack")
+                    Label("浮动结果", systemImage: "square.stack")
                 }
                 .tag(Tabs.floating)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             KeysSettingsView()
                 .tabItem {
-                    Label("Keyboard shortcuts", systemImage: "command.square")
+                    Label("键盘快捷键", systemImage: "command.square")
                 }
                 .tag(Tabs.keys)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             AutomationSettingsView()
                 .tabItem {
-                    Label("Automation", systemImage: "hammer")
+                    Label("自动化", systemImage: "hammer")
                 }
                 .tag(Tabs.automation)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             AboutSettingsView()
                 .tabItem {
-                    Label("About", systemImage: "info.circle")
+                    Label("关于", systemImage: "info.circle")
                 }
                 .tag(Tabs.about)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -1641,7 +1641,7 @@ struct SettingsView: View {
                     }
                 }
 
-            Button("Quit", role: .destructive) { NSApp.terminate(nil) }
+            Button("退出", role: .destructive) { NSApp.terminate(nil) }
                 .buttonStyle(.borderedProminent)
                 .offset(x: -10, y: -15)
             if svm.tab == .about {

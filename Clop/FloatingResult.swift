@@ -43,9 +43,9 @@ struct FloatingResultList: View {
             pasteboard.clearContents()
             let urls = optimisers.compactMap(\.url)
             pasteboard.writeObjects(urls as [NSPasteboardWriting])
-            copiedText = "Copied!"
+            copiedText = "已复制！"
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                copiedText = "Copy all"
+                copiedText = "复制全部"
             }
         }
         .buttonStyle(FlatButton(color: .inverted.opacity(0.9), textColor: .primary, radius: 7, verticalPadding: 2))
@@ -54,7 +54,7 @@ struct FloatingResultList: View {
     }
 
     var clearAllButton: some View {
-        Button("Clear all") {
+        Button("清除全部") {
             for optimiser in optimisers {
                 optimiser.remove(after: 100, withAnimation: true)
             }
@@ -91,7 +91,7 @@ struct UpdateButton: View {
 
     var body: some View {
         if let updateVersion = um.newVersion {
-            Button(short ? "v\(updateVersion) available" : "v\(updateVersion) update available") {
+            Button(short ? "v\(updateVersion) 可用" : "v\(updateVersion) 更新可用") {
                 checkForUpdates()
                 focus()
             }
@@ -491,7 +491,7 @@ struct FloatingResult: View {
         if let error = optimiser.error {
             VStack(alignment: proError ? .center : .leading) {
                 if proError {
-                    Button("Get Clop Pro") {
+                    Button("获取 Clop Pro") {
                         settingsViewManager.tab = .about
                         openWindow(id: "settings")
 
@@ -521,7 +521,7 @@ struct FloatingResult: View {
                 }
 
                 if proError {
-                    Button("Never show this again") {
+                    Button("不再显示") {
                         neverShowProError = true
                         hoveredOptimiserID = nil
                         optimiser.remove(after: 200, withAnimation: true)

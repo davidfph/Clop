@@ -184,7 +184,7 @@ struct DropZonePresetsView: View {
                 zoneIcon(systemName: zone.map(\.icon) ?? (nextPreset ? "plus.square.dashed" : "square.dashed"))
                     .rotation3DEffect(.degrees(hovered ? 170 : 0), axis: (x: 0, y: 1, z: 0), perspective: 1.2)
 
-                Text(zone.map(\.name) ?? (nextPreset ? "Add preset" : "No preset"))
+                Text(zone.map(\.name) ?? (nextPreset ? "添加预设" : "无预设"))
                     .round(10)
                     .foregroundColor(nextPreset ? .fg.warm.opacity(0.7) : .secondary)
                     .multilineTextAlignment(.center)
@@ -346,21 +346,21 @@ struct DropZoneView: View {
                 }
 
                 VStack(spacing: -1) {
-                    Text(hoverState ? "Drop to optimise" : "Drop here to optimise")
+                    Text(hoverState ? "拖放以优化" : "拖放到此处优化")
                         .font(.system(size: hoverState ? 16 : 14, weight: hoverState ? .heavy : .semibold, design: .rounded))
                         .padding(.bottom, 6)
 
-                    Text("^: show preset zones")
+                    Text("^: 显示预设区域")
                         .medium(10)
                         .foregroundColor(.primary)
                         .opacity(0.8)
                     if !hoverState {
-                        Text("⌥: dismiss this drop zone")
+                        Text("⌥: 关闭此拖放区")
                             .medium(10)
                             .foregroundColor(.primary)
                             .opacity(0.8)
                     }
-                    Text("⌘: use aggressive optimisation")
+                    Text("⌘: 使用激进优化")
                         .medium(10)
                         .foregroundColor(keysManager.flags.sideIndependentModifiers.contains(.command) ? .mauvish : .primary)
                         .opacity(0.8)
